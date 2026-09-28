@@ -2,12 +2,13 @@
 
 # 🪔 Pandal Hopper Guide
 
-### A festive, zero-backend map of 140+ Jagadhatri Puja pandals across Chandannagar, Mankundu, Bhadreswar, Kolkata & Krishnanagar.
+### A festive, zero-backend map of **180 Jagadhatri Puja pandals** across Chandannagar & Bhadreswar, West Bengal.
 
 [![Live Site](https://img.shields.io/badge/Live-pandalhopping.netlify.app-C41E28?style=for-the-badge&logo=netlify&logoColor=white)](https://pandalhopping.netlify.app/)
-[![Made with Love](https://img.shields.io/badge/Made%20with-🪔%20in%20Chandannagar-E8A61C?style=for-the-badge)](#)
-[![No Backend](https://img.shields.io/badge/Backend-None-F5C542?style=for-the-badge)](#)
-[![License](https://img.shields.io/badge/License-MIT-8B1520?style=for-the-badge)](#license)
+[![Pandals](https://img.shields.io/badge/Pandals-180-E8A61C?style=for-the-badge)](#)
+[![Made with Love](https://img.shields.io/badge/Made%20with-🪔%20in%20Chandannagar-F5C542?style=for-the-badge)](#)
+[![No Backend](https://img.shields.io/badge/Backend-None-8B1520?style=for-the-badge)](#)
+[![License](https://img.shields.io/badge/License-MIT-4A0A12?style=for-the-badge)](#license)
 
 <img src="https://pandalhopping.netlify.app/og-preview.png" alt="Pandal Hopper Guide preview" width="720" />
 
@@ -17,15 +18,16 @@
 
 ## 🌟 What is this?
 
-Every year, during **Jagadhatri Puja**, thousands of pandal hoppers wander the streets of Chandannagar, Mankundu, Bhadreswar, Kolkata and Krishnanagar trying to find the next big pandal. Google Maps helps with roads, but not with **"which pandal is closest to me right now?"**
+Every year during **Jagadhatri Puja**, lakhs of pandal hoppers wander the streets of Chandannagar, Mankundu, Bhadreswar, and surrounding areas trying to find the next great pandal. Google Maps helps with roads but not with *"which pandal is closest to me right now?"*
 
 **Pandal Hopper Guide** answers that question in one tap.
 
-- 🗺️ Interactive map with 140+ pandal markers
-- 🔍 Search by pandal name, area, or theme
+- 🗺️ Interactive map with **180 verified pandal markers**
+- 🔍 Search by pandal name, area, theme, or address
 - 🎯 Filter by area with live counts
 - 📍 "Use my location" — sorts everything by distance
 - 🚗 Turn-by-turn routing with distance and time
+- 🎉 Jubilee / Adi Puja / Popular badges on every card
 - 📱 Fully responsive — desktop, tablet, mobile
 - ✨ Festive maroon-and-gold UI inspired by pandal decorations
 - 🚀 **Zero backend** — pure static site, deploys in seconds
@@ -39,6 +41,37 @@ Every year, during **Jagadhatri Puja**, thousands of pandal hoppers wander the s
 | <img src="docs/screenshot-desktop.png" width="500" /> | <img src="docs/screenshot-mobile.png" width="240" /> |
 
 > *(Add your own screenshots to a `docs/` folder and update the paths above.)*
+
+---
+
+## 📊 The Data
+
+| Metric | Count |
+|---|---|
+| **Total pandals** | **180** |
+| Chandannagar | 133 |
+| Bhadreswar | 47 |
+| **Adi Pujas** (pre-1900) | 7 |
+| **Jubilee celebrations** | 15 |
+| **Pre-Jubilee celebrations** | 19 |
+| **Popular pandals** | 23 |
+| Oldest pandal | **Milannagar Sohid Bedi** — est. **1686** (341 years) |
+| Second oldest | **Laxmigunj Kaporepotti** — est. 1766 (261 years) |
+| Third oldest | **Gourhati Tetultala** — est. 1793 (234 years) |
+
+Each pandal entry includes:
+
+- **`id`** — URL-safe slug (used as map marker ID)
+- **`name`** — committee name as listed by CCJPC
+- **`area`** — Chandannagar or Bhadreswar
+- **`address`** — full postal address with Google Plus Code
+- **`lat` / `lng`** — precise coordinates
+- **`estd`** — founding year
+- **`year`** — how many years the puja has run
+- **`timings`** — when the pandal is open to visitors
+- **`theme`** — design theme or classification
+- **`jubilee` / `preJubilee` / `adi` / `popular`** — filter flags
+- **`tags`** — array of classification tags
 
 ---
 
@@ -82,7 +115,7 @@ pandal-guide/
 ├── css/
 │   └── styles.css          # All styling, design tokens, responsive rules
 └── js/
-    ├── data.js             # 🪔 All 140+ pandals (single source of truth)
+    ├── data.js             # 🪔 All 180 pandals (single source of truth)
     ├── state.js            # Shared state + helpers (haversine, escapeHtml)
     ├── map.js              # Leaflet init, marker icons, route layers
     ├── ui.js               # Renders chips, list, detail card
@@ -92,7 +125,7 @@ pandal-guide/
     └── main.js             # Boots everything
 ```
 
-**Why this structure?** Every file has **one job**. If you want to change a colour, edit `css/styles.css`. If you want to add a pandal, edit `js/data.js`. Nothing else needs to move.
+**Why this structure?** Every file has **one job**. Change a colour → edit `css/styles.css`. Add a pandal → edit `js/data.js`. Nothing else moves.
 
 ---
 
@@ -133,19 +166,28 @@ Browser Geolocation API. Sorts the entire pandal list by distance from you, draw
 ### 🚗 Routing
 Routing uses the **OSRM demo server** (free, CORS-enabled, no API key). The polyline follows actual roads.
 
-If OSRM is unavailable, the app **gracefully falls back** to a straight-line distance calculation using the Haversine formula multiplied by a 1.3× road factor — so the feature never breaks.
+If OSRM is unavailable, the app **gracefully falls back** to a straight-line distance estimate (Haversine × 1.3 road factor), so the feature never breaks.
 
 ### 🔎 Start-Point Search
 Type any Indian address and get live suggestions via **Nominatim** (OpenStreetMap's free geocoder). Results are cached for the session to respect Nominatim's 1 req/sec policy.
 
+### 🎉 Special Pandal Filters
+New in the 180-pandal dataset:
+
+- **Jubilee pandals** — celebrating a milestone anniversary this year (Silver, Golden, Diamond, Platinum)
+- **Pre-Jubilee pandals** — one year away from a milestone
+- **Adi Pujas** — historic pujas established before 1900
+- **Popular pandals** — the community's most-visited committees
+
 ### 📱 Mobile
-Everything is a single stacked column. When you tap a pandal from the list, the map auto-scrolls into view. No bottom sheet, no separate mobile layout to maintain.
+Single stacked column. Tapping a pandal from the list auto-scrolls the map into view. No separate mobile layout to maintain.
 
 ### ☰ Profile Drawer
 The hamburger button in the top-left opens a slide-in drawer with:
 - Your avatar + name + role
 - Contact links (email, WhatsApp, Instagram, GitHub)
 - About this project
+- **Data attribution** (see below)
 - Credits
 
 Edit **`index.html`** → `<aside class="drawer">` to customise.
@@ -176,18 +218,41 @@ Open `js/data.js`. Each pandal is one line:
 
 ```js
 {
-  id:    "subhaspally",
-  name:  "Subhaspally Sarbojanin",
-  area:  "Chandannagar",
-  address: "Near Chandannagar Station",
-  lat:   22.8665,
-  lng:   88.3680,
+  id: "subhaspally",
+  name: "Subhaspally Sarbojanin",
+  area: "Bhadreswar",
+  address: "V993+HFW, Uttarpara, Khalisani, West Bengal 712136",
+  lat: 22.8690563,
+  lng: 88.3537835,
+  estd: 1969,
+  year: 58,
   timings: "10 AM – 10 PM",
-  theme:  "Innovative pandal art"
+  theme: "Traditional",
+  jubilee: false,
+  preJubilee: false,
+  adi: false,
+  popular: false,
+  tags: []
 }
 ```
 
 **Get coordinates:** right-click a location in Google Maps → click the lat/lng at the top → paste both numbers.
+
+### Add a special filter (jubilee / Adi / popular)
+
+In your sidebar component:
+
+```jsx
+const [special, setSpecial] = useState('all'); // 'all' | 'jubilee' | 'preJubilee' | 'adi' | 'popular'
+
+const visible = pandals.filter((p) => {
+  if (special === 'jubilee') return p.jubilee;
+  if (special === 'preJubilee') return p.preJubilee;
+  if (special === 'adi') return p.adi;
+  if (special === 'popular') return p.popular;
+  return true;
+});
+```
 
 ### Change your profile details
 
@@ -209,6 +274,14 @@ All in `css/styles.css` → `:root { … }`. Change `--maroon-700` and every pri
 
 ---
 
+## 📜 Data Attribution
+
+**Pandal data source:** [**Jagadhatri Online**](https://www.jagadhatrionline.co.in/puja-committee-list) — Chandannagar's leading Jagadhatri Puja portal since 2016.
+
+The committee list, coordinates, established years, and jubilee classifications in `js/data.js` were compiled from their public directory. If you use this dataset, please retain the attribution line in your app's profile drawer and this README.
+
+---
+
 ## ⚠️ Notes & Constraints
 
 ### Nominatim Policy
@@ -224,7 +297,7 @@ For very high traffic, self-host Nominatim or switch to Mapbox / LocationIQ / Ge
 Also fair-use. If it ever goes down, the routing gracefully falls back to a Haversine-based distance estimate with a dashed line — the app never crashes.
 
 ### Coordinate Accuracy
-Pandal coordinates in `js/data.js` are **approximate** and were compiled from public sources. They're accurate enough to see on a map, but if you're launching this for real festival traffic, **verify every coordinate** against Google Maps or a recent Google Street View pass.
+Coordinates in `js/data.js` come directly from the Jagadhatri Online directory, which uses Google Plus Codes for accuracy. They should place markers within a few metres of the actual pandal.
 
 ---
 
@@ -248,12 +321,12 @@ MIT — use it, fork it, host it, print it on a t-shirt. Just don't blame me if 
 
 ## 🙏 Credits
 
+- **Pandal data** — [Jagadhatri Online](https://www.jagadhatrionline.co.in/puja-committee-list) (Chandannagar's #1 Jagadhatri Puja portal)
 - **Map data** © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors
 - **Routing** by [OSRM](http://project-osrm.org/)
 - **Geocoding** by [Nominatim](https://nominatim.org/)
 - **Map library** — [Leaflet](https://leafletjs.com/)
 - **Fonts** — [Playfair Display](https://fonts.google.com/specimen/Playfair+Display) + [Inter](https://fonts.google.com/specimen/Inter) via Google Fonts
-- **Pandal data** compiled from public and community sources
 
 ---
 
