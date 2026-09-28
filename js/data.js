@@ -151,4 +151,23 @@ export const PANDALS = [
 {id:"boinchi",name:"Boinchi Jagaddhatri Puja",area:"Boinchi",address:"Boinchi, Hooghly",lat:23.0500,lng:88.3000,timings:"10 AM – 10 PM",theme:"Notable celebration"},
 {id:"sutragarh",name:"Sutragarh Jagaddhatri Puja",area:"Sutragarh",address:"Sutragarh, Hooghly",lat:22.9500,lng:88.3800,timings:"10 AM – 10 PM",theme:"Notable celebration"},
 {id:"santipur",name:"Santipur Jagaddhatri Puja",area:"Santipur",address:"Santipur, Nadia",lat:23.2500,lng:88.4300,timings:"10 AM – 10 PM",theme:"Notable celebration"},
+
+// ── Additional missed pandals ──
+{id:"gondalpara-satadal",name:"Gondalpara Satadal Club",area:"Chandannagar",address:"Gondalpara, Chandannagar",lat:22.8525,lng:88.3685,timings:"10 AM – 10 PM",theme:"Artistic lighting and traditional idol"},
+{id:"gondalpara-kalitala",name:"Gondalpara Kalitala Sarbojanin",area:"Chandannagar",address:"Gondalpara, Chandannagar",lat:22.8518,lng:88.3692,timings:"10 AM – 10 PM",theme:"Heritage community puja"},
+{id:"strand-promenade",name:"Chandannagar Strand Road Promenade",area:"Chandannagar",address:"Strand Road, Chandannagar",lat:22.8642,lng:88.3655,timings:"10 AM – 10 PM",theme:"Illuminated riverfront display"},
+{id:"laxmiganj-bazar",name:"Laxmiganj Cloth Market Barowari",area:"Chandannagar",address:"Laxmiganj Bazar, Chandannagar",lat:22.8635,lng:88.3628,timings:"10 AM – 10 PM",theme:"Traditional market committee puja"},
+{id:"fatakgora-chalantika",name:"Fatakgora Chalantika Club",area:"Chandannagar",address:"Fatakgora, Chandannagar",lat:22.8722,lng:88.3755,timings:"10 AM – 10 PM",theme:"Contemporary theme pandal"},
+{id:"mankundu-railgate",name:"Mankundu Railgate Barowari",area:"Mankundu",address:"Near Mankundu Station Railgate",lat:22.8562,lng:88.3622,timings:"10 AM – 10 PM",theme:"Grand gateway theme"},
+{id:"mankundu-khanpukur",name:"Khanpukur Sarbajanin",area:"Mankundu",address:"Khanpukur, Mankundu",lat:22.8545,lng:88.3635,timings:"10 AM – 10 PM",theme:"Traditional water body lighting"},
+{id:"bhadreswar-telinipara-jute",name:"Telinipara Jute Mill Barowari",area:"Bhadreswar",address:"Telinipara, Bhadreswar",lat:22.8450,lng:88.3580,timings:"10 AM – 10 PM",theme:"Worker union traditional puja"},
+{id:"bhadreswar-angus",name:"Angus Jute Mill Colony Sarbajanin",area:"Bhadreswar",address:"Angus, Bhadreswar",lat:22.8410,lng:88.3520,timings:"10 AM – 10 PM",theme:"Colonial industrial town celebration"},
+{id:"sejo-maa",name:"Sejo Maa of Krishnanagar",area:"Krishnanagar",address:"Krishnanagar Town",lat:23.4015,lng:88.5015,timings:"10 AM – 10 PM",theme:"Historic barowari deity"},
+{id:"baro-maa-krishnanagar",name:"Baro Maa Golden Idol Committee",area:"Krishnanagar",address:"Station Road, Krishnanagar",lat:23.4025,lng:88.5035,timings:"10 AM – 10 PM",theme:"Ornate gold-adorned idol"},
+{id:"posta-jagadhatri",name:"Posta Rajbari Jagadhatri Puja",area:"Kolkata",address:"Posta, North Kolkata",lat:22.5840,lng:88.3570,timings:"Morning & Evening",theme:"Historic heritage puja"},
+{id:"hedua-park-jagadhatri",name:"Hedua Park Jagadhatri Samity",area:"Kolkata",address:"Cornwallis Street, Hedua",lat:22.5810,lng:88.3670,timings:"10 AM – 10 PM",theme:"Traditional North Kolkata celebration"},
+{id:"kumartuli-jagadhatri",name:"Kumartuli Park Jagadhatri Samity",area:"Kolkata",address:"Kumartuli, Kolkata",lat:22.5980,lng:88.3620,timings:"10 AM – 10 PM",theme:"Artisans' neighborhood puja"},
+{id:"rishra-bangur-park",name:"Rishra Bangur Park Sarbajanin",area:"Rishra",address:"Bangur Park, Rishra",lat:22.7180,lng:88.3520,timings:"10 AM – 10 PM",theme:"Grand parkway illumination"},
+{id:"ranaghat-college-para",name:"Ranaghat College Para Jagadhatri Puja",area:"Ranaghat",address:"College Para, Ranaghat",lat:23.1800,lng:88.5800,timings:"10 AM – 10 PM",theme:"Youth club theme pandal"},
+{id:"ranaghat-biswaspara",name:"Ranaghat Biswaspara Sarbajanin",area:"Ranaghat",address:"Biswaspara, Ranaghat",lat:23.1820,lng:88.5820,timings:"10 AM – 10 PM",theme:"Traditional heritage puja"}
 ];
