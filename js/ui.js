@@ -65,7 +65,7 @@ export function renderList() {
           <span>${escapeHtml(p.name)}</span>
           ${p.distKm != null ? `<span class="dist">${p.distKm.toFixed(1)} km</span>` : ''}
         </div>
-        <div class="meta">${escapeHtml(p.area)}<span class="dot">·</span>${escapeHtml(p.timings)}</div>
+        <div class="meta">${escapeHtml(p.area)}</div>
         <div class="theme">${escapeHtml(p.theme)}</div>
       </li>`
     )
@@ -141,10 +141,6 @@ export function renderDetail() {
       </div>
       <div class="detail-body">
         <div class="pills">
-          <span class="pill">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-            ${escapeHtml(p.timings)}
-          </span>
           <span class="pill">🎨 ${escapeHtml(p.theme)}</span>
         </div>
         ${routeBox}
