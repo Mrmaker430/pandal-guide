@@ -68,7 +68,6 @@ Each pandal entry includes:
 - **`lat` / `lng`** — precise coordinates
 - **`estd`** — founding year
 - **`year`** — how many years the puja has run
-- **`timings`** — when the pandal is open to visitors
 - **`theme`** — design theme or classification
 - **`jubilee` / `preJubilee` / `adi` / `popular`** — filter flags
 - **`tags`** — array of classification tags
@@ -226,7 +225,6 @@ Open `js/data.js`. Each pandal is one line:
   lng: 88.3537835,
   estd: 1969,
   year: 58,
-  timings: "10 AM – 10 PM",
   theme: "Traditional",
   jubilee: false,
   preJubilee: false,
