@@ -1,9 +1,9 @@
+// js/search.js
 import { state, $, escapeHtml } from './state.js';
 import { map, startIcon, mapState } from './map.js';
-import { select, clearSelection } from './actions.js';
+import { select } from './actions.js';
 import { renderList, renderAll } from './ui.js';
 
-// ─── Start-point search (Nominatim) ───
 export function initStartSearch() {
   const input = $('startInput');
   const box = $('startSugg');
@@ -12,10 +12,7 @@ export function initStartSearch() {
 
   input.addEventListener('input', (e) => {
     const q = e.target.value.trim();
-    if (q.length < 3) {
-      box.style.display = 'none';
-      return;
-    }
+    if (q.length < 3) { box.style.display = 'none'; return; }
 
     clearTimeout(suggestTimer);
     suggestTimer = setTimeout(async () => {
@@ -29,24 +26,14 @@ export function initStartSearch() {
           url.searchParams.set('limit', '5');
           url.searchParams.set('countrycodes', 'in');
           url.searchParams.set('email', 'pandal-guide@example.com');
-
           const r = await fetch(url);
           const data = await r.json();
-          results = data.map((d) => ({
-            label: d.display_name,
-            lat: +d.lat,
-            lng: +d.lon,
-          }));
+          results = data.map((d) => ({ label: d.display_name, lat: +d.lat, lng: +d.lon }));
           geocodeCache.set(q.toLowerCase(), results);
-        } catch {
-          results = [];
-        }
+        } catch { results = []; }
       }
 
-      if (!results.length) {
-        box.style.display = 'none';
-        return;
-      }
+      if (!results.length) { box.style.display = 'none'; return; }
 
       box.innerHTML = results
         .map((r, i) => `<li data-i="${i}">${escapeHtml(r.label)}</li>`)
@@ -56,26 +43,15 @@ export function initStartSearch() {
       box.querySelectorAll('li').forEach((li) => {
         li.onclick = () => {
           const r = results[+li.dataset.i];
-          state.start = {
-            lat: r.lat,
-            lng: r.lng,
-            label: r.label.split(',').slice(0, 2).join(','),
-          };
+          state.start = { lat: r.lat, lng: r.lng, label: r.label.split(',').slice(0, 2).join(',') };
           state.user = null;
           input.value = r.label.split(',').slice(0, 2).join(',');
           box.style.display = 'none';
           $('locStatus').style.display = 'none';
 
-          if (mapState.userMarker) {
-            map.removeLayer(mapState.userMarker);
-            mapState.userMarker = null;
-          }
+          if (mapState.userMarker) { map.removeLayer(mapState.userMarker); mapState.userMarker = null; }
           if (mapState.startMarker) map.removeLayer(mapState.startMarker);
-
-          mapState.startMarker = L.marker([r.lat, r.lng], { icon: startIcon })
-            .addTo(map)
-            .bindPopup('Start point');
-
+          mapState.startMarker = L.marker([r.lat, r.lng], { icon: startIcon }).addTo(map).bindPopup('শুরুর বিন্দু');
           map.flyTo([r.lat, r.lng], 13, { duration: 1 });
 
           if (state.selected) select(state.selected);
@@ -92,17 +68,12 @@ export function initStartSearch() {
   });
 }
 
-// ─── Pandal search box ───
 export function initPandalSearch() {
   const input = $('search');
   let searchTimer = null;
-
   input.addEventListener('input', (e) => {
     const v = e.target.value;
     clearTimeout(searchTimer);
-    searchTimer = setTimeout(() => {
-      state.query = v;
-      renderList();
-    }, 200);
+    searchTimer = setTimeout(() => { state.query = v; renderList(); }, 200);
   });
-                               }
+}
