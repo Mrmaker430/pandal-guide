@@ -1,3 +1,4 @@
+// js/drawer.js
 import { $ } from './state.js';
 
 export function initDrawer() {
@@ -23,10 +24,7 @@ export function initDrawer() {
     document.body.style.overflow = '';
   };
 
-  menuBtn.onclick = () =>
-    drawer.classList.contains('open') ? close() : open();
+  menuBtn.onclick = () => drawer.classList.contains('open') ? close() : open();
   overlay.onclick = close;
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') close();
-  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
 }
