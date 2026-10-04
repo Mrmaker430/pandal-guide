@@ -1,13 +1,9 @@
+// js/actions.js
 import { PANDALS } from './data.js';
 import { state, $, haversineKm, origin } from './state.js';
 import {
-  map,
-  markers,
-  pandalIcon,
-  resetMarkerIcon,
-  selectMarker,
-  mapState,
-  clearRouteLayers,
+  map, markers, resetMarkerIcon, selectMarker,
+  mapState, clearRouteLayers,
 } from './map.js';
 import { renderList, renderDetail, renderAll } from './ui.js';
 
@@ -22,13 +18,10 @@ export function clearSelection() {
 export async function select(p) {
   state.selected = p;
   state.route = null;
-
   selectMarker(p);
-
   map.flyTo([p.lat, p.lng], 16, { duration: 0.8 });
   markers[p.id].openPopup();
 
-  // On narrow screens, bring the map into view
   if (window.innerWidth < 640) {
     document.querySelector('.map-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
@@ -76,27 +69,21 @@ export async function select(p) {
       L.polyline([[o.lat, o.lng], [p.lat, p.lng]], { color: '#A8201A', weight: 3, dashArray: '8 8', opacity: 0.85 }).addTo(map),
     ];
   }
-
   renderDetail();
 }
 
-// ─── Geolocation ───
 export function initGeolocation() {
   const btn = $('useLoc');
   const label = $('useLocText');
   const status = $('locStatus');
   const err = $('locErr');
-
   const showErr = (msg) => { err.textContent = msg; err.style.display = 'flex'; };
   const hideErr = () => { err.style.display = 'none'; };
 
   btn.onclick = () => {
-    if (!navigator.geolocation) {
-      showErr('Geolocation not supported.');
-      return;
-    }
+    if (!navigator.geolocation) { showErr('এই ব্রাউজারে লোকেশন সাপোর্ট নেই।'); return; }
     btn.disabled = true;
-    label.textContent = 'Locating…';
+    label.textContent = 'লোকেশন খোঁজা হচ্ছে…';
     hideErr();
 
     navigator.geolocation.getCurrentPosition(
@@ -104,41 +91,27 @@ export function initGeolocation() {
         state.user = { lat: pos.coords.latitude, lng: pos.coords.longitude };
         state.start = null;
 
-        if (mapState.startMarker) {
-          map.removeLayer(mapState.startMarker);
-          mapState.startMarker = null;
-        }
+        if (mapState.startMarker) { map.removeLayer(mapState.startMarker); mapState.startMarker = null; }
         if (mapState.userMarker) map.removeLayer(mapState.userMarker);
 
         mapState.userMarker = L.marker([state.user.lat, state.user.lng], {
-          icon: L.divIcon({
-            className: '',
-            html: '<div class="user-marker"></div>',
-            iconSize: [18, 18],
-            iconAnchor: [9, 9],
-          }),
-        })
-          .addTo(map)
-          .bindPopup('You are here');
+          icon: L.divIcon({ className: '', html: '<div class="user-marker"></div>', iconSize: [18, 18], iconAnchor: [9, 9] }),
+        }).addTo(map).bindPopup('আপনি এখানে');
 
         map.flyTo([state.user.lat, state.user.lng], 14, { duration: 1 });
         status.style.display = 'flex';
         btn.disabled = false;
-        label.textContent = 'Refresh my location';
+        label.textContent = 'লোকেশন রিফ্রেশ করুন';
 
         if (state.selected) select(state.selected);
         else renderAll();
       },
       (e) => {
         btn.disabled = false;
-        label.textContent = 'Use my current location';
-        showErr(
-          e.code === e.PERMISSION_DENIED
-            ? 'Location permission denied.'
-            : 'Could not get location.'
-        );
+        label.textContent = 'আমার বর্তমান অবস্থান';
+        showErr(e.code === e.PERMISSION_DENIED ? 'লোকেশন অনুমতি দেওয়া হয়নি।' : 'লোকেশন পাওয়া যায়নি।');
       },
       { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
     );
   };
-    }
+}
