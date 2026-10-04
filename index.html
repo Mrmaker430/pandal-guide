@@ -1,26 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <meta name="theme-color" content="#6B0F1A" />
-  <title>Pandal Hopper Guide · Jagadhatri Puja</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<meta name="theme-color" content="#8B1520" />
+<title>পথ প্রদর্শক · জগদ্ধাত্রী পূজা · চন্দননগর</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/favicon.svg">
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Noto+Serif+Bengali:wght@600;700;800&family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="./css/style.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<link rel="stylesheet" href="./css/styles.css" />
 </head>
 <body>
 
 <!-- ═══════════════════════════════════════════════════════════
      HAMBURGER + PROFILE DRAWER
      ═══════════════════════════════════════════════════════════ -->
-<button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+<button class="menu-btn" id="menuBtn" aria-label="মেনু খুলুন" aria-expanded="false">
   <span></span>
   <span></span>
   <span></span>
@@ -31,23 +34,33 @@
 <aside class="drawer" id="drawer" aria-hidden="true">
   <div class="drawer-hero">
     <div class="drawer-hero-content">
-      <div class="avatar">YN</div>
-      <h2 class="drawer-name">Your Name</h2>
-      <p class="drawer-role">Maker · Pandal Hopper Guide</p>
+      <div class="avatar">তু</div>
+      <h2 class="drawer-name">আপনার নাম</h2>
+      <p class="drawer-role">নির্মাতা · পথ প্রদর্শক</p>
     </div>
   </div>
 
   <div class="drawer-body">
     <div class="drawer-section">
-      <p class="drawer-section-title">Get in touch</p>
+      <p class="drawer-section-title">যোগাযোগ</p>
 
-      <a class="link-row" href="https://t.me/yourhandle" target="_blank" rel="noreferrer">
+      <a class="link-row" href="mailto:you@example.com">
         <span class="link-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2 2 9.5l7 3 2.5 7.5 3.5-4.5 5.5 4z"/><path d="M9 12.5 18 6"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
         </span>
         <span class="link-text">
-          <span class="link-label">Telegram</span>
-          <span class="link-value">t.me/yourhandle</span>
+          <span class="link-label">ইমেইল</span>
+          <span class="link-value">you@example.com</span>
+        </span>
+      </a>
+
+      <a class="link-row" href="https://wa.me/919999999999" target="_blank" rel="noreferrer">
+        <span class="link-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        </span>
+        <span class="link-text">
+          <span class="link-label">হোয়াটসঅ্যাপ</span>
+          <span class="link-value">+91 99999 99999</span>
         </span>
       </a>
 
@@ -56,47 +69,65 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
         </span>
         <span class="link-text">
-          <span class="link-label">Instagram</span>
+          <span class="link-label">ইনস্টাগ্রাম</span>
           <span class="link-value">@yourhandle</span>
-        </span>
-      </a>
-
-      <a class="link-row" href="https://github.com/yourhandle" target="_blank" rel="noreferrer">
-        <span class="link-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-        </span>
-        <span class="link-text">
-          <span class="link-label">GitHub</span>
-          <span class="link-value">github.com/yourhandle</span>
         </span>
       </a>
     </div>
 
     <div class="drawer-section">
-      <p class="drawer-section-title">About this project</p>
+      <p class="drawer-section-title">এই প্রকল্প সম্পর্কে</p>
       <div class="about-box">
-        <strong>Pandal Hopper Guide</strong> is a free, open map of 150+ Jagadhatri Puja pandals across Chandannagar, Mankundu, Bhadreswar, Kolkata and Krishnanagar — built to help pandal hoppers find their way during the five-day festival.
+        <strong>পথ প্রদর্শক</strong> — চন্দননগর ও ভদ্রেশ্বরের ১৮০টি জগদ্ধাত্রী পূজা প্যান্ডেলের একটি উন্মুক্ত মানচিত্র। পূজার সময় পথনির্দেশের জন্য তৈরি।
       </div>
     </div>
 
     <div class="drawer-section">
-      <p class="drawer-section-title">Credits</p>
+      <p class="drawer-section-title">তথ্যসূত্র</p>
       <div class="about-box">
-        Map data © OpenStreetMap contributors · Routing by OSRM · Geocoding by Nominatim. Pandal data compiled from public and community sources. Verify coordinates before travelling.
+        প্যান্ডেল তথ্য: <strong>Jagadhatri Online</strong> · মানচিত্র: OpenStreetMap · রাউটিং: OSRM
       </div>
     </div>
   </div>
 
-  <div class="drawer-footer">Made with 🪔 in Chandannagar</div>
+  <div class="drawer-footer">🪔 চন্দননগরে তৈরি</div>
 </aside>
 
 <!-- ═══════════════════════════════════════════════════════════
-     HERO HEADER
+     HERO HEADER — পথ প্রদর্শক
      ═══════════════════════════════════════════════════════════ -->
 <header class="brand">
   <div class="brand-content">
-    <h1><span class="emoji">🪔</span>Pandal Hopper Guide</h1>
-    <p class="sub">Jagadhatri Puja · Chandannagar &amp; beyond</p>
+    <h1>
+      <svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true">
+        <defs>
+          <linearGradient id="lm-badge" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#FFE8A3"/>
+            <stop offset="100%" stop-color="#E8A61C"/>
+          </linearGradient>
+        </defs>
+        <path d="M 6 30
+                 Q 6 40, 24 40
+                 Q 42 40, 42 30
+                 L 6 30 Z"
+              fill="url(#lm-badge)"/>
+        <rect x="4" y="28" width="40" height="4" rx="2"
+              fill="#FFF9F0" opacity=".95"/>
+        <path d="M24 22
+                 C 19 27, 19 32, 24 34
+                 C 29 32, 29 27, 24 22 Z"
+              fill="#FFE8A3"/>
+        <path d="M24 26
+                 C 22 28, 22 31, 24 32
+                 C 26 31, 26 28, 24 26 Z"
+              fill="#FFF9F0" opacity=".9"/>
+        <circle cx="24" cy="24" r="14"
+                fill="none" stroke="#FFE8A3"
+                stroke-width="1" opacity=".35"/>
+      </svg>
+      পথ প্রদর্শক
+    </h1>
+    <p class="sub">জগদ্ধাত্রী পূজা । চন্দননগর ও তার আশেপাশে</p>
   </div>
 </header>
 
@@ -106,10 +137,10 @@
 <main class="container">
 
   <section class="section">
-    <p class="label">Start from</p>
+    <p class="label">কোথা থেকে শুরু</p>
     <div class="field">
       <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 21s-7-6.5-7-12a7 7 0 1 1 14 0c0 5.5-7 12-7 12z"/></svg>
-      <input id="startInput" type="text" placeholder="Search a station, ghat or area…" autocomplete="off" />
+      <input id="startInput" type="text" placeholder="স্টেশন, ঘাট বা এলাকা খুঁজুন…" autocomplete="off" />
     </div>
     <ul id="startSugg" class="sugg" style="display:none"></ul>
   </section>
@@ -117,22 +148,22 @@
   <section class="section">
     <button class="btn primary" id="useLoc">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg>
-      <span id="useLocText">Use my current location</span>
+      <span id="useLocText">আমার বর্তমান অবস্থান</span>
     </button>
-    <div class="status ok" id="locStatus" style="display:none">Live location active — sorted by distance</div>
+    <div class="status ok" id="locStatus" style="display:none">লোকেশন চালু — দূরত্ব অনুসারে সাজানো</div>
     <div class="status err" id="locErr" style="display:none"></div>
   </section>
 
   <section class="section">
-    <p class="label">Find a pandal</p>
+    <p class="label">প্যান্ডেল খুঁজুন</p>
     <div class="field">
       <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-      <input id="search" type="text" placeholder="Name, area or theme…" autocomplete="off" />
+      <input id="search" type="text" placeholder="প্যান্ডেল, এলাকা বা থিম…" autocomplete="off" />
     </div>
   </section>
 
   <section class="section">
-    <p class="label">Areas</p>
+    <p class="label">এলাকা</p>
     <div class="chips" id="chips"></div>
   </section>
 
@@ -144,7 +175,7 @@
 
   <div class="list-head">
     <span class="count-big" id="listCount">0</span>
-    <span class="label" id="listLabel">pandals nearby</span>
+    <span class="label" id="listLabel">কাছের প্যান্ডেল</span>
   </div>
   <ul class="list" id="list"></ul>
 
@@ -152,4 +183,4 @@
 
 <script type="module" src="./js/main.js"></script>
 </body>
-  </html>
+</html>
