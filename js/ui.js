@@ -86,7 +86,7 @@ export function renderList() {
           <span>${escapeHtml(displayName(p))}</span>
           ${p.distKm != null ? `<span class="dist">${p.distKm.toFixed(1)} কিমি</span>` : ''}
         </div>
-        <div class="meta">${escapeHtml(p.area)} · ${escapeHtml(p.timings)}</div>
+        <div class="meta">${escapeHtml(p.area)}${p.timings ? ` · ${escapeHtml(p.timings)}` : ''}</div>
         <div class="theme">${escapeHtml(p.theme)}</div>
       </li>`
     )
@@ -157,7 +157,7 @@ export function renderDetail() {
       </div>
       <div class="detail-body">
         <div class="pills">
-          <span class="pill">🕙 ${escapeHtml(p.timings)}</span>
+          ${p.timings ? `<span class="pill">🕙 ${escapeHtml(p.timings)}</span>` : ''}
           <span class="pill">🎨 ${escapeHtml(p.theme)}</span>
         </div>
         ${routeBox}

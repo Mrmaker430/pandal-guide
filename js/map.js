@@ -47,7 +47,7 @@ PANDALS.forEach((p) => {
   const m = L.marker([p.lat, p.lng], { icon: pandalIcon })
     .addTo(map)
     .bindPopup(
-      `<strong>${displayName(p)}</strong>${p.address}<br><small style="color:#8A7868">${p.timings}</small>`
+      `<strong>${displayName(p)}</strong>${p.address}${p.timings ? `<br><small style="color:#8A7868">${p.timings}</small>` : ''}`
     );
   m.on('click', () => onSelectHandler(p));
   markers[p.id] = m;
