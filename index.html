@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-<meta name="theme-color" content="#8B1520" />
+<meta name="theme-color" content="#801020" />
 <title>পথ প্রদর্শক · জগদ্ধাত্রী পূজা · চন্দননগর</title>
 
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -11,7 +11,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Noto+Serif+Bengali:wght@600;700;800&family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Noto+Serif+Bengali:wght@600;700;800&family=Hind+Siliguri:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -94,7 +94,7 @@
 </aside>
 
 <!-- ═══════════════════════════════════════════════════════════
-     HERO HEADER — পথ প্রদর্শক
+     HEADER BRAND
      ═══════════════════════════════════════════════════════════ -->
 <header class="brand">
   <div class="brand-content">
@@ -102,8 +102,8 @@
       <svg class="logo-mark" viewBox="0 0 48 48" aria-hidden="true">
         <defs>
           <linearGradient id="lm-badge" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#FFE8A3"/>
-            <stop offset="100%" stop-color="#E8A61C"/>
+            <stop offset="0%" stop-color="#FFE082"/>
+            <stop offset="100%" stop-color="#FFB300"/>
           </linearGradient>
         </defs>
         <path d="M 6 30
@@ -112,74 +112,155 @@
                  L 6 30 Z"
               fill="url(#lm-badge)"/>
         <rect x="4" y="28" width="40" height="4" rx="2"
-              fill="#FFF9F0" opacity=".95"/>
+              fill="#FFFDF9" opacity=".95"/>
         <path d="M24 22
                  C 19 27, 19 32, 24 34
                  C 29 32, 29 27, 24 22 Z"
-              fill="#FFE8A3"/>
+              fill="#FFE082"/>
         <path d="M24 26
                  C 22 28, 22 31, 24 32
                  C 26 31, 26 28, 24 26 Z"
-              fill="#FFF9F0" opacity=".9"/>
+              fill="#FFFDF9" opacity=".9"/>
         <circle cx="24" cy="24" r="14"
-                fill="none" stroke="#FFE8A3"
-                stroke-width="1" opacity=".35"/>
+                fill="none" stroke="#FFE082"
+                stroke-width="1.2" opacity=".4"/>
       </svg>
       পথ প্রদর্শক
     </h1>
-    <p class="sub">জগদ্ধাত্রী পূজা । চন্দননগর ও তার আশেপাশে</p>
+    <p class="sub">জগদ্ধাত্রী পূজা · চন্দননগর ও ভদ্রেশ্বর গাইড</p>
   </div>
 </header>
 
 <!-- ═══════════════════════════════════════════════════════════
-     MAIN CONTENT
+     MAIN CONTENT TABS
      ═══════════════════════════════════════════════════════════ -->
 <main class="container">
 
-  <section class="section">
-    <p class="label">কোথা থেকে শুরু</p>
-    <div class="field">
-      <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 21s-7-6.5-7-12a7 7 0 1 1 14 0c0 5.5-7 12-7 12z"/></svg>
-      <input id="startInput" type="text" placeholder="স্টেশন, ঘাট বা এলাকা খুঁজুন…" autocomplete="off" />
+  <!-- ──────── VIEW 1: LOCATION / PANDALS LIST ──────── -->
+  <section id="view-pandals" class="tab-view active" role="tabpanel" aria-labelledby="tab-pandals">
+    <div class="view-header">
+      <div class="view-title-wrap">
+        <h2 class="view-title">প্যান্ডেল তালিকা</h2>
+        <p class="view-subtitle">সকল পূজা মণ্ডপ ও এলাকা ভিত্তিক ফিল্টার</p>
+      </div>
+      <div class="count-pill">
+        <span class="count-big" id="listCount">0</span>
+        <span class="count-label">মণ্ডপ</span>
+      </div>
     </div>
-    <ul id="startSugg" class="sugg" style="display:none"></ul>
+
+    <div class="section-card">
+      <p class="label">এলাকা নির্বাচন</p>
+      <div class="chips" id="chips"></div>
+    </div>
+
+    <div class="list-head">
+      <span class="label" id="listLabel">উপলব্ধ প্যান্ডেলসমূহ</span>
+    </div>
+    <ul class="list" id="list"></ul>
   </section>
 
-  <section class="section">
-    <button class="btn primary" id="useLoc">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg>
-      <span id="useLocText">আমার বর্তমান অবস্থান</span>
-    </button>
-    <div class="status ok" id="locStatus" style="display:none">লোকেশন চালু — দূরত্ব অনুসারে সাজানো</div>
-    <div class="status err" id="locErr" style="display:none"></div>
+  <!-- ──────── VIEW 2: MAP & ROUTING ──────── -->
+  <section id="view-map" class="tab-view" role="tabpanel" aria-labelledby="tab-map">
+    <div class="view-header">
+      <div class="view-title-wrap">
+        <h2 class="view-title">লাইভ মানচিত্র</h2>
+        <p class="view-subtitle">আপনার বর্তমান অবস্থান ও গন্তব্য প্যান্ডেল রুট</p>
+      </div>
+    </div>
+
+    <!-- Quick Location Bar inside Map -->
+    <div class="map-controls-card">
+      <div class="map-ctrl-row">
+        <button class="btn primary" id="useLoc">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg>
+          <span id="useLocText">আমার বর্তমান অবস্থান</span>
+        </button>
+      </div>
+      <div class="status ok" id="locStatus" style="display:none">লোকেশন সক্রিয় — বর্তমান অবস্থান মানচিত্রে প্রদর্শিত</div>
+      <div class="status err" id="locErr" style="display:none"></div>
+
+      <div class="start-input-wrap">
+        <p class="label">অথবা প্রারম্ভিক স্থান সেট করুন</p>
+        <div class="field">
+          <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 21s-7-6.5-7-12a7 7 0 1 1 14 0c0 5.5-7 12-7 12z"/></svg>
+          <input id="startInput" type="text" placeholder="স্টেশন, ঘাট বা প্রারম্ভিক অবস্থান…" autocomplete="off" />
+        </div>
+        <ul id="startSugg" class="sugg" style="display:none"></ul>
+      </div>
+    </div>
+
+    <div class="map-wrap">
+      <div id="map"></div>
+    </div>
+
+    <!-- Destination detail card -->
+    <div id="detail"></div>
   </section>
 
-  <section class="section">
-    <p class="label">প্যান্ডেল খুঁজুন</p>
-    <div class="field">
-      <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-      <input id="search" type="text" placeholder="প্যান্ডেল, এলাকা বা থিম…" autocomplete="off" />
+  <!-- ──────── VIEW 3: SEARCH ──────── -->
+  <section id="view-search" class="tab-view" role="tabpanel" aria-labelledby="tab-search">
+    <div class="view-header">
+      <div class="view-title-wrap">
+        <h2 class="view-title">প্যান্ডেল খুঁজুন</h2>
+        <p class="view-subtitle">নাম, এলাকা বা থিম লিখে খুঁজুন এবং ট্যাপ করলেই মানচিত্রে পৌঁছান</p>
+      </div>
+    </div>
+
+    <div class="search-hero-box">
+      <div class="field search-field-lg">
+        <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="pandalSearchInput" type="text" placeholder="প্যান্ডেল নাম, এলাকা, থিম বা ঠিকানা খুঁজুন…" autocomplete="off" autofocus />
+        <button id="clearSearchBtn" class="clear-btn" aria-label="অনুসন্ধান মুছুন" style="display:none">✕</button>
+      </div>
+      <p class="search-tip">💡 যে কোনো প্যান্ডেলে ট্যাপ করলেই স্বয়ংক্রিয়ভাবে গন্তব্য হিসেবে নির্বাচিত হবে এবং মানচিত্রে রুট দেখাবে।</p>
+    </div>
+
+    <div class="search-results-wrap">
+      <div class="search-status-bar">
+        <span class="search-count-badge" id="searchCountBadge">ফলাফল: ০</span>
+      </div>
+      <ul class="search-results-list" id="pandalSearchResults"></ul>
     </div>
   </section>
-
-  <section class="section">
-    <p class="label">এলাকা</p>
-    <div class="chips" id="chips"></div>
-  </section>
-
-  <div class="map-wrap">
-    <div id="map"></div>
-  </div>
-
-  <div id="detail"></div>
-
-  <div class="list-head">
-    <span class="count-big" id="listCount">0</span>
-    <span class="label" id="listLabel">কাছের প্যান্ডেল</span>
-  </div>
-  <ul class="list" id="list"></ul>
 
 </main>
+
+<!-- ═══════════════════════════════════════════════════════════
+     BOTTOM NAVIGATION BAR (ROW-WISE 3 BUTTONS)
+     ═══════════════════════════════════════════════════════════ -->
+<nav class="bottom-nav" role="tablist" aria-label="প্রধান নেভিগেশন">
+  <button class="nav-item active" id="tab-pandals" data-tab="pandals" role="tab" aria-selected="true" aria-controls="view-pandals">
+    <div class="nav-icon-wrap">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 21s-7-6.5-7-12a7 7 0 1 1 14 0c0 5.5-7 12-7 12z"/>
+        <circle cx="12" cy="9" r="2.5"/>
+      </svg>
+    </div>
+    <span class="nav-label">প্যান্ডেল তালিকা</span>
+  </button>
+
+  <button class="nav-item" id="tab-map" data-tab="map" role="tab" aria-selected="false" aria-controls="view-map">
+    <div class="nav-icon-wrap">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/>
+        <line x1="8" y1="2" x2="8" y2="18"/>
+        <line x1="16" y1="6" x2="16" y2="22"/>
+      </svg>
+    </div>
+    <span class="nav-label">লাইভ ম্যাপ</span>
+  </button>
+
+  <button class="nav-item" id="tab-search" data-tab="search" role="tab" aria-selected="false" aria-controls="view-search">
+    <div class="nav-icon-wrap">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+    </div>
+    <span class="nav-label">অনুসন্ধান</span>
+  </button>
+</nav>
 
 <script type="module" src="./js/main.js"></script>
 </body>

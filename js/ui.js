@@ -2,8 +2,9 @@
 import { PANDALS } from './data.js';
 import { NAME_BN } from './names-bn.js';
 import { state, $, haversineKm, origin, escapeHtml } from './state.js';
+import { map } from './map.js';
 
-const displayName = (p) => NAME_BN[p.id] || p.name;
+export const displayName = (p) => NAME_BN[p.id] || p.name;
 
 const AREA_BN = {
   Chandannagar: 'চন্দননগর',
@@ -26,6 +27,46 @@ export const setUIHandlers = ({ onSelect, onClear }) => {
   if (onClear) onClearHandler = onClear;
 };
 
+/* ═══════════════════════════════════════════════════════════
+   TAB SWITCHING LOGIC
+   ═══════════════════════════════════════════════════════════ */
+export function switchTab(tabId) {
+  // tabId can be 'pandals', 'map', or 'search'
+  const navTabs = document.querySelectorAll('.bottom-nav .nav-item');
+  const views = document.querySelectorAll('.tab-view');
+
+  navTabs.forEach((tab) => {
+    const isCurrent = tab.dataset.tab === tabId;
+    tab.classList.toggle('active', isCurrent);
+    tab.setAttribute('aria-selected', isCurrent ? 'true' : 'false');
+  });
+
+  views.forEach((view) => {
+    const isTarget = view.id === `view-${tabId}`;
+    view.classList.toggle('active', isTarget);
+  });
+
+  if (tabId === 'map') {
+    // Invalidate map size so Leaflet correctly calculates viewport dimensions
+    setTimeout(() => {
+      map.invalidateSize();
+    }, 150);
+  }
+
+  // Smoothly scroll back to top of main view if scrolled down
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+export function initTabs() {
+  const tabs = document.querySelectorAll('.bottom-nav .nav-item');
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const tabId = tab.dataset.tab;
+      switchTab(tabId);
+    });
+  });
+}
+
 export function renderChips() {
   const counts = new Map();
   PANDALS.forEach((p) => counts.set(p.area, (counts.get(p.area) || 0) + 1));
@@ -36,7 +77,10 @@ export function renderChips() {
     ...sorted.map(([n, c]) => ({ n: AREA_BN[n] || n, v: n, c })),
   ];
 
-  $('chips').innerHTML = chips
+  const chipsEl = $('chips');
+  if (!chipsEl) return;
+
+  chipsEl.innerHTML = chips
     .map(
       (ch) => `
         <button class="chip ${state.area === ch.v ? 'active' : ''}" data-area="${escapeHtml(ch.v)}">
@@ -45,7 +89,7 @@ export function renderChips() {
     )
     .join('');
 
-  $('chips').querySelectorAll('.chip').forEach((el) => {
+  chipsEl.querySelectorAll('.chip').forEach((el) => {
     el.onclick = () => {
       state.area = el.dataset.area;
       renderAll();
@@ -71,14 +115,18 @@ export function filteredPandals() {
 
 export function renderList() {
   const list = filteredPandals();
-  $('listCount').textContent = list.length;
+  const countEl = $('listCount');
+  if (countEl) countEl.textContent = list.length;
+
+  const listEl = $('list');
+  if (!listEl) return;
 
   if (!list.length) {
-    $('list').innerHTML = `<li class="empty">কোনো প্যান্ডেল পাওয়া যায়নি।</li>`;
+    listEl.innerHTML = `<li class="empty">কোনো প্যান্ডেল পাওয়া যায়নি।</li>`;
     return;
   }
 
-  $('list').innerHTML = list
+  listEl.innerHTML = list
     .map(
       (p) => `
       <li data-id="${p.id}" class="${state.selected?.id === p.id ? 'active' : ''}">
@@ -92,16 +140,19 @@ export function renderList() {
     )
     .join('');
 
-  $('list').querySelectorAll('li[data-id]').forEach((el) => {
+  listEl.querySelectorAll('li[data-id]').forEach((el) => {
     el.onclick = () => {
       const p = PANDALS.find((x) => x.id === el.dataset.id);
       onSelectHandler(p);
+      // When selected from list, also jump to map to show destination
+      switchTab('map');
     };
   });
 }
 
 export function renderDetail() {
   const box = $('detail');
+  if (!box) return;
   if (!state.selected) { box.innerHTML = ''; return; }
 
   const p = state.selected;
@@ -115,8 +166,8 @@ export function renderDetail() {
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 21s-7-6.5-7-12a7 7 0 1 1 14 0c0 5.5-7 12-7 12z"/></svg>
         </div>
         <div class="route-meta">
-          <div class="route-km" style="font-family:var(--font-body);font-size:.92rem;color:var(--muted);font-weight:500">শুরুর বিন্দু সেট করুন</div>
-          <div class="route-min">উপরের সার্চ বাক্স ব্যবহার করুন বা লোকেশন চালু করুন।</div>
+          <div class="route-km" style="font-family:var(--font-body);font-size:.92rem;color:var(--text-muted);font-weight:600">গন্তব্য নির্ধারিত হয়েছে</div>
+          <div class="route-min">দূরত্ব ও রুট দেখতে উপরে "আমার বর্তমান অবস্থান" চাপুন বা প্রারম্ভিক স্থান সেট করুন।</div>
         </div>
       </div>`;
   } else if (state.route) {
@@ -127,7 +178,7 @@ export function renderDetail() {
         </div>
         <div class="route-meta">
           <div class="route-km">${state.route.km} কিমি <small>·  ~${state.route.min} মিনিট</small></div>
-          <div class="route-min">গাড়িতে · ${state.route.real ? 'লাইভ ট্রাফিক' : 'সরলরেখা অনুমান'}</div>
+          <div class="route-min">গাড়িতে · ${state.route.real ? 'লাইভ পথনির্দেশ' : 'সরলরেখা অনুমান'}</div>
         </div>
       </div>`;
   } else {
@@ -137,7 +188,7 @@ export function renderDetail() {
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
         </div>
         <div class="route-meta">
-          <div class="route-km" style="font-family:var(--font-body);font-size:.92rem;color:var(--muted);font-weight:500">রুট গণনা করা হচ্ছে…</div>
+          <div class="route-km" style="font-family:var(--font-body);font-size:.92rem;color:var(--text-muted);font-weight:500">রুট গণনা করা হচ্ছে…</div>
         </div>
       </div>`;
   }
@@ -148,7 +199,7 @@ export function renderDetail() {
   box.innerHTML = `
     <div class="detail-card">
       <div class="detail-hero">
-        <button class="detail-close" id="closeDetail" aria-label="বন্ধ করুন">×</button>
+        <button class="detail-close" id="closeDetail" aria-label="বন্ধ করুন">✕</button>
         <div class="detail-hero-content">
           <span class="area-badge">🪔 ${escapeHtml(p.area)}</span>
           <h2>${escapeHtml(displayName(p))}</h2>
