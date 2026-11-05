@@ -1,12 +1,16 @@
 // js/search.js
-import { state, $, escapeHtml } from './state.js';
+import { PANDALS } from './data.js';
+import { NAME_BN } from './names-bn.js';
+import { state, $, escapeHtml, origin, haversineKm } from './state.js';
 import { map, startIcon, mapState } from './map.js';
 import { select } from './actions.js';
-import { renderList, renderAll } from './ui.js';
+import { renderList, renderAll, switchTab, displayName } from './ui.js';
 
 export function initStartSearch() {
   const input = $('startInput');
   const box = $('startSugg');
+  if (!input || !box) return;
+
   const geocodeCache = new Map();
   let suggestTimer = null;
 
@@ -68,12 +72,107 @@ export function initStartSearch() {
   });
 }
 
+function searchPandalsList(query) {
+  const q = query.toLowerCase().trim();
+  const o = origin();
+  if (!q) {
+    return PANDALS
+      .map((p) => ({ ...p, distKm: o ? haversineKm(o, p) : null }))
+      .sort((a, b) => (a.distKm != null ? a.distKm - b.distKm : a.name.localeCompare(b.name)))
+      .slice(0, 25);
+  }
+
+  const terms = q.split(/\s+/);
+  return PANDALS
+    .filter((p) => {
+      const bnName = NAME_BN[p.id] || '';
+      const haystack = `${p.name} ${bnName} ${p.area} ${p.address} ${p.theme} ${(p.tags || []).join(' ')}`.toLowerCase();
+      return terms.every((t) => haystack.includes(t));
+    })
+    .map((p) => ({ ...p, distKm: o ? haversineKm(o, p) : null }))
+    .sort((a, b) => (a.distKm != null ? a.distKm - b.distKm : a.name.localeCompare(b.name)));
+}
+
+export function renderSearchResults(query = '') {
+  const resultsContainer = $('pandalSearchResults');
+  const countBadge = $('searchCountBadge');
+  if (!resultsContainer) return;
+
+  const results = searchPandalsList(query);
+  if (countBadge) {
+    countBadge.textContent = query.trim()
+      ? `ফলাফল: ${results.length}টি মণ্ডপ পাওয়া গেছে`
+      : `প্রস্তাবিত মণ্ডপ (${results.length}টি)`;
+  }
+
+  if (!results.length) {
+    resultsContainer.innerHTML = `<li class="empty">"${escapeHtml(query)}" নামে কোনো প্যান্ডেল খুঁজে পাওয়া যায়নি। অন্য নাম বা এলাকা দিয়ে চেষ্টা করুন।</li>`;
+    return;
+  }
+
+  resultsContainer.innerHTML = results
+    .map((p) => `
+      <li data-pandal-id="${p.id}">
+        <div class="search-item-info">
+          <div class="name">
+            <span>${escapeHtml(displayName(p))}</span>
+            ${p.distKm != null ? `<span class="dist">${p.distKm.toFixed(1)} কিমি</span>` : ''}
+          </div>
+          <div class="meta">${escapeHtml(p.area)} · ${escapeHtml(p.address.split(',')[0])}</div>
+          <div class="theme">${escapeHtml(p.theme)}</div>
+        </div>
+        <div class="search-item-action">
+          <span>ম্যাপে দেখুন</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </div>
+      </li>
+    `)
+    .join('');
+
+  resultsContainer.querySelectorAll('li[data-pandal-id]').forEach((li) => {
+    li.addEventListener('click', () => {
+      const p = PANDALS.find((x) => x.id === li.dataset.pandalId);
+      if (!p) return;
+      // Auto select as destination
+      select(p);
+      // Auto jump to map section
+      switchTab('map');
+    });
+  });
+}
+
 export function initPandalSearch() {
-  const input = $('search');
+  const input = $('pandalSearchInput');
+  const clearBtn = $('clearSearchBtn');
+  if (!input) return;
+
+  // Initial render with recommendations
+  renderSearchResults('');
+
   let searchTimer = null;
   input.addEventListener('input', (e) => {
-    const v = e.target.value;
+    const val = e.target.value;
+    if (clearBtn) {
+      clearBtn.style.display = val ? 'flex' : 'none';
+    }
     clearTimeout(searchTimer);
-    searchTimer = setTimeout(() => { state.query = v; renderList(); }, 200);
+    searchTimer = setTimeout(() => {
+      state.query = val;
+      renderSearchResults(val);
+      renderList();
+    }, 150);
   });
+
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
+      input.value = '';
+      clearBtn.style.display = 'none';
+      state.query = '';
+      renderSearchResults('');
+      renderList();
+      input.focus();
+    });
+  }
 }
