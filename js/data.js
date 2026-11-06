@@ -5,7 +5,7 @@
 
 export const PANDALS = [
   // ═══════════════════════════════════════════════════════════
-  // CHANDANNAGAR — 133 committees (CCJPC affiliated)
+  // CHANDANNAGAR — 132 committees (CCJPC affiliated)
   // ═══════════════════════════════════════════════════════════
 
   // ─── Central / Sarishapara / Palpara cluster ───
@@ -196,5 +196,5 @@ export const PANDALS = [
   { id: "sukantanagar-mahila-samity", name: "Sukantanagar Mahila Samity", area: "Bhadreswar", address: "Sukanta Nagar, Purbachal Pally, Bhadreswar, West Bengal 712124", lat: 22.819794075592565, lng: 88.34267316117061, estd: 2000, year: 27, theme: "Traditional", jubilee: false, preJubilee: false, adi: false, popular: false, tags: [] },
 ];
 
-// Total: 133 Chandannagar + 47 Bhadreswar = 180 committees
+// Total: 132 Chandannagar + 47 Bhadreswar = 179 records in the current source dataset
 // Data source: Jagadhatri Online — jagadhatrionline.co.in/puja-committee-list
