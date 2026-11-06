@@ -5,7 +5,7 @@ import { select, clearSelection, initGeolocation } from './actions.js';
 import { initStartSearch, initPandalSearch } from './search.js';
 import { initDrawer } from './drawer.js';
 
-// Map marker click selects destination and shows detail
+// Map marker click selects destination and shows detail.
 setOnSelect((p) => {
   select(p);
   switchTab('map');
@@ -13,10 +13,45 @@ setOnSelect((p) => {
 
 setUIHandlers({ onSelect: select, onClear: clearSelection });
 
+function initPWA() {
+  if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./service-worker.js').catch((error) => {
+        console.warn('PWA offline support could not be enabled:', error);
+      });
+    });
+  }
+
+  const installButton = document.getElementById('installApp');
+  if (!installButton) return;
+
+  let installPrompt = null;
+  window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault();
+    installPrompt = event;
+    installButton.hidden = false;
+  });
+
+  installButton.addEventListener('click', async () => {
+    if (!installPrompt) return;
+    installButton.disabled = true;
+    installPrompt.prompt();
+    await installPrompt.userChoice;
+    installPrompt = null;
+    installButton.hidden = true;
+    installButton.disabled = false;
+  });
+
+  window.addEventListener('appinstalled', () => {
+    installPrompt = null;
+    installButton.hidden = true;
+  });
+}
+
 initTabs();
 initDrawer();
 initGeolocation();
 initStartSearch();
 initPandalSearch();
-
+initPWA();
 renderAll();
