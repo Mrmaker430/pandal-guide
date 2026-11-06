@@ -4,6 +4,7 @@ import { setUIHandlers, renderAll, initTabs, switchTab } from './ui.js';
 import { select, clearSelection, initGeolocation } from './actions.js';
 import { initStartSearch, initPandalSearch } from './search.js';
 import { initDrawer } from './drawer.js';
+import { initVisitorFeatures } from './features.js';
 
 // Map marker click selects destination and shows detail.
 setOnSelect((p) => {
@@ -53,5 +54,6 @@ initDrawer();
 initGeolocation();
 initStartSearch();
 initPandalSearch();
+initVisitorFeatures();
 initPWA();
 renderAll();
