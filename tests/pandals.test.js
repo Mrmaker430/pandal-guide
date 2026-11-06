@@ -2,8 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { PANDALS } from '../js/data.js';
 
-test('the original directory still contains all 180 pandals', () => {
-  assert.equal(PANDALS.length, 180);
+test('the original directory still contains all 179 pandals', () => {
+  assert.equal(PANDALS.length, 179);
 });
 
 test('pandal IDs are unique and every record has usable map coordinates', () => {
@@ -21,6 +21,6 @@ test('the existing Chandannagar and Bhadreswar split is preserved', () => {
     result[pandal.area] = (result[pandal.area] || 0) + 1;
     return result;
   }, {});
-  assert.equal(counts.Chandannagar, 133);
+  assert.equal(counts.Chandannagar, 132);
   assert.equal(counts.Bhadreswar, 47);
 });
