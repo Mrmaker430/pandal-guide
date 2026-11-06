@@ -55,5 +55,6 @@ initGeolocation();
 initStartSearch();
 initPandalSearch();
 initVisitorFeatures();
+document.getElementById('sortPandals')?.addEventListener('change', renderAll);
 initPWA();
 renderAll();
