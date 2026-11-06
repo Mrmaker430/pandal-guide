@@ -1,0 +1,26 @@
+{
+  "name": "পথ প্রদর্শক · জগদ্ধাত্রী পূজা গাইড",
+  "short_name": "পথ প্রদর্শক",
+  "description": "চন্দননগর ও ভদ্রেশ্বরের জগদ্ধাত্রী পূজার প্যান্ডেল গাইড",
+  "lang": "bn",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#fffaf2",
+  "theme_color": "#801020",
+  "icons": [
+    {
+      "src": "./icons/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

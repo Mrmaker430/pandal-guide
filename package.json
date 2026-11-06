@@ -1,0 +1,10 @@
+{
+  "name": "pandal-guide",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "check": "for file in js/*.js service-worker.js; do node --check \"$file\"; done"
+  }
+}
