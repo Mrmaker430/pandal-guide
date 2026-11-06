@@ -34,7 +34,7 @@ Every year during **Jagadhatri Puja**, lakhs of pandal hoppers wander the street
 
 ---
 
-## 🖼️ Screenshots
+## 📲 Progressive Web App\n\n- Installable on supported Android, desktop, and mobile browsers.\n- The app shell, pandal directory, Bengali names, and styles are cached after the first successful visit.\n- The pandal list and search remain available offline after caching.\n- Live OpenStreetMap tiles, Nominatim search, OSRM routing, and external Google Maps links require an internet connection.\n- Map tiles are deliberately not cached; follow the [OpenStreetMap tile usage policy](https://operations.osmfoundation.org/policies/tiles/).\n- Run `npm test` to validate the 180-record dataset and `node --check` for JavaScript syntax.\n\n## 🖼️ Screenshots
 
 | Desktop | Mobile |
 |---|---|
@@ -102,7 +102,7 @@ Then open **http://localhost:5173**.
 | **Cloudflare Pages** | Connect repo, no build command | 1 min |
 | **Vercel** | `npx vercel` in the folder | 1 min |
 
-No build step. No environment variables. No server.
+No build step or server is required for the static site. The PWA service worker and install prompt are enabled on HTTPS hosting.
 
 ---
 
@@ -124,7 +124,7 @@ pandal-guide/
     └── main.js             # Boots everything
 ```
 
-**Why this structure?** Every file has **one job**. Change a colour → edit `css/styles.css`. Add a pandal → edit `js/data.js`. Nothing else moves.
+**Why this structure?** Every file has **one job**. Change a colour → edit `css/style.css`. Add a pandal → edit `js/data.js`. Nothing else moves.
 
 ---
 
