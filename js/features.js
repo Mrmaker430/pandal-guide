@@ -48,7 +48,13 @@ export function initVisitorFeatures() {
     if (!root) return;
     root.querySelectorAll('[data-pandal-id]').forEach((item) => {
       const id = item.dataset.pandalId;
-      if (!id || item.querySelector('.feature-actions')) return;
+      if (!id) return;
+      const existing = item.querySelector('.feature-actions');
+      if (existing) {
+        const toggle = existing.querySelector('[data-action="toggle-favourite"]');
+        if (toggle) toggle.textContent = isFavorite(id) ? '♥ সংরক্ষিত' : '♡ পছন্দ';
+        return;
+      }
       const actions = document.createElement('div');
       actions.className = 'feature-actions';
       actions.innerHTML = `<button class="mini-action" data-action="toggle-favourite" data-id="${id}" aria-label="পছন্দের তালিকায় যোগ">${isFavorite(id) ? '♥ সংরক্ষিত' : '♡ পছন্দ'}</button><button class="mini-action" data-action="add-stop" data-id="${id}">＋ ট্যুরে যোগ</button>`;
