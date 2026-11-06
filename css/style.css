@@ -1128,3 +1128,24 @@ li.empty::before { display: none !important; }
     border-right: 1.5px solid var(--border-subtle);
   }
 }
+
+
+/* PWA install action */
+.install-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 14px auto 0;
+  padding: 9px 16px;
+  border: 1px solid rgba(255, 224, 130, .65);
+  border-radius: 999px;
+  color: #FFF8E7;
+  background: rgba(255, 255, 255, .12);
+  font: inherit;
+  font-size: .84rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .18s ease, transform .18s ease;
+}
+.install-btn:hover { background: rgba(255, 255, 255, .22); transform: translateY(-1px); }
+.install-btn[hidden] { display: none; }
