@@ -120,6 +120,7 @@ export function renderSearchResults(query = '') {
           </div>
           <div class="meta">${escapeHtml(p.area)} · ${escapeHtml(p.address.split(',')[0])}</div>
           <div class="theme">${escapeHtml(p.theme)}</div>
+          <div class="feature-actions"><button class="mini-action" data-action="toggle-favourite" data-id="${p.id}">♡ পছন্দ</button><button class="mini-action" data-action="add-stop" data-id="${p.id}">＋ ট্যুরে যোগ</button></div>
         </div>
         <div class="search-item-action">
           <span>ম্যাপে দেখুন</span>
