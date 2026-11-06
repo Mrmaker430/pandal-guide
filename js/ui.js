@@ -109,9 +109,12 @@ export function filteredPandals() {
       return haystack.includes(q);
     })
     .map((p) => ({ ...p, distKm: o ? haversineKm(o, p) : null }))
-    .sort((a, b) =>
-      a.distKm != null ? a.distKm - b.distKm : a.name.localeCompare(b.name)
-    );
+    .sort((a, b) => {
+      const mode = document.getElementById('sortPandals')?.value || 'name';
+      if (mode === 'popular' && Boolean(a.popular) !== Boolean(b.popular)) return a.popular ? -1 : 1;
+      if (mode === 'oldest') return (a.estd || 9999) - (b.estd || 9999);
+      return a.distKm != null ? a.distKm - b.distKm : a.name.localeCompare(b.name);
+    });
 }
 
 export function renderList() {
