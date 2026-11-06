@@ -162,6 +162,7 @@
     <div class="list-head">
       <span class="label" id="listLabel">উপলব্ধ প্যান্ডেলসমূহ</span>
     </div>
+    <div class="list-tools"><label for="sortPandals">সাজান</label><select id="sortPandals"><option value="name">নাম অনুযায়ী</option><option value="popular">জনপ্রিয় আগে</option><option value="oldest">প্রাচীন পুজো আগে</option></select></div>
     <ul class="list" id="list"></ul>
   </section>
 
@@ -229,6 +230,15 @@
     </div>
   </section>
 
+  <section id="view-tour" class="tab-view" role="tabpanel" aria-labelledby="tab-tour">
+    <div class="view-header">
+      <div class="view-title-wrap">
+        <h2 class="view-title">আমার সংগ্রহ ও ট্যুর</h2>
+        <p class="view-subtitle">পছন্দের প্যান্ডেল সংরক্ষণ করুন, নিজের ঘোরার পরিকল্পনা সাজান</p>
+      </div>
+    </div>
+    <div id="visitor-tools" class="visitor-tools"></div>
+  </section>
 </main>
 
 <!-- ═══════════════════════════════════════════════════════════
@@ -264,6 +274,10 @@
       </svg>
     </div>
     <span class="nav-label">অনুসন্ধান</span>
+  </button>
+  <button class="nav-item" id="tab-tour" data-tab="tour" role="tab" aria-selected="false" aria-controls="view-tour">
+    <div class="nav-icon-wrap"><span aria-hidden="true" style="font-size:21px">♥</span></div>
+    <span class="nav-label">আমার ট্যুর</span>
   </button>
 </nav>
 

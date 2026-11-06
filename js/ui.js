@@ -3,6 +3,7 @@ import { PANDALS } from './data.js';
 import { NAME_BN } from './names-bn.js';
 import { state, $, haversineKm, origin, escapeHtml } from './state.js';
 import { map } from './map.js';
+import { isFavorite } from './features.js';
 
 export const displayName = (p) => NAME_BN[p.id] || p.name;
 
@@ -108,9 +109,12 @@ export function filteredPandals() {
       return haystack.includes(q);
     })
     .map((p) => ({ ...p, distKm: o ? haversineKm(o, p) : null }))
-    .sort((a, b) =>
-      a.distKm != null ? a.distKm - b.distKm : a.name.localeCompare(b.name)
-    );
+    .sort((a, b) => {
+      const mode = document.getElementById('sortPandals')?.value || 'name';
+      if (mode === 'popular' && Boolean(a.popular) !== Boolean(b.popular)) return a.popular ? -1 : 1;
+      if (mode === 'oldest') return (a.estd || 9999) - (b.estd || 9999);
+      return a.distKm != null ? a.distKm - b.distKm : a.name.localeCompare(b.name);
+    });
 }
 
 export function renderList() {
@@ -136,6 +140,7 @@ export function renderList() {
         </div>
         <div class="meta">${escapeHtml(p.area)}${p.timings ? ` · ${escapeHtml(p.timings)}` : ''}</div>
         <div class="theme">${escapeHtml(p.theme)}</div>
+        <div class="feature-actions"><button class="mini-action" data-action="toggle-favourite" data-id="${p.id}">${isFavorite(p.id) ? "♥ সংরক্ষিত" : "♡ পছন্দ"}</button><button class="mini-action" data-action="add-stop" data-id="${p.id}">＋ ট্যুরে যোগ</button></div>
       </li>`
     )
     .join('');
@@ -212,6 +217,7 @@ export function renderDetail() {
           <span class="pill">🎨 ${escapeHtml(p.theme)}</span>
         </div>
         ${routeBox}
+        <div class="feature-actions detail-feature-actions"><button class="mini-action" data-action="toggle-favourite" data-id="${p.id}">${isFavorite(p.id) ? "♥ সংরক্ষিত" : "♡ পছন্দ"}</button><button class="mini-action" data-action="add-stop" data-id="${p.id}">＋ ট্যুরে যোগ</button></div>
         <div class="actions">
           <a class="btn primary" href="${gmaps}" target="_blank" rel="noreferrer">
             গুগল ম্যাপে খুলুন
