@@ -1,0 +1,10 @@
+{
+  "name": "pandal-guide",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "check": "node --check js/main.js && node --check js/service-worker-placeholder.js"
+  }
+}
