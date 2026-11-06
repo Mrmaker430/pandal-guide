@@ -22,7 +22,7 @@ Every year during **Jagadhatri Puja**, lakhs of pandal hoppers wander the street
 
 **Pandal Hopper Guide** answers that question in one tap.
 
-- 🗺️ Interactive map with **180 verified pandal markers**
+- 🗺️ Interactive map with **179 pandal markers**
 - 🔍 Search by pandal name, area, theme, or address
 - 🎯 Filter by area with live counts
 - 📍 "Use my location" — sorts everything by distance
@@ -48,8 +48,8 @@ Every year during **Jagadhatri Puja**, lakhs of pandal hoppers wander the street
 
 | Metric | Count |
 |---|---|
-| **Total pandals** | **180** |
-| Chandannagar | 133 |
+| **Total pandals** | **179** |
+| Chandannagar | 132 |
 | Bhadreswar | 47 |
 | **Adi Pujas** (pre-1900) | 7 |
 | **Jubilee celebrations** | 15 |
@@ -114,7 +114,7 @@ pandal-guide/
 ├── css/
 │   └── styles.css          # All styling, design tokens, responsive rules
 └── js/
-    ├── data.js             # 🪔 All 180 pandals (single source of truth)
+    ├── data.js             # 🪔 All 179 pandal records (single source of truth)
     ├── state.js            # Shared state + helpers (haversine, escapeHtml)
     ├── map.js              # Leaflet init, marker icons, route layers
     ├── ui.js               # Renders chips, list, detail card
