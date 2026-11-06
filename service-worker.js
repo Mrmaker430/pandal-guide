@@ -1,5 +1,5 @@
 /* Pandal Guide service worker — app shell only; no OSM tile/API caching. */
-const CACHE_NAME = 'pandal-guide-shell-v1';
+const CACHE_NAME = 'pandal-guide-shell-v2';
 const APP_SHELL = [
   './',
   './index.html',
@@ -12,6 +12,7 @@ const APP_SHELL = [
   './js/search.js',
   './js/ui.js',
   './js/drawer.js',
+  './js/features.js',
   './js/data.js',
   './js/names-bn.js',
   './icons/icon-192.svg',
